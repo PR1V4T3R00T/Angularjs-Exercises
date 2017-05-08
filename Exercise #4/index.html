@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="BookStoreApp">
+<head>
+	<title>BookStoreApp</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Include the ui-router script -->
+  	<script src="js/angular-ui-router.min.js"></script>
+  	<script>
+    	// ...and add 'ui.router' as a dependency
+    	var app = angular.module('BookStoreApp', ['ui.router']);
+  	</script>
+</head>
+<body>
+	<div class="container" ng-controller="BookStoreController as BookStoreApp">
+		<div class="row">
+			<h1 style="padding-bottom: 10px; color: gray"><strong>Libros</strong></h1>
+		</div>
+		<div class="row" style="padding-bottom: 50px;">
+			<form class="form-inline">
+				<label class="col-lg-2 col-md-2">Buscar</label>
+				<div class="form-group">
+					<label>Titulo:</label>
+					<input type="text" ng-model="searchText">
+				</div>
+				<div class="form-group">
+					<label>Ordenar</label>
+					<select class="form-control" ng-model="orden">
+						<option value="titulo">Titulo</option>
+						<option value="editorial">Editorial</option>
+					</select>
+				</div>
+			</form>
+		</div>
+		<div class="container">
+			<div class="row" style="padding-bottom: 50px;" ng-repeat="product in BookStoreApp.products | filter:searchText | orderBy:orden">
+				<img class="col-lg-2 col-md-2 col-sm-2" ng-src="{{product.img}}">
+				<h4><a href="" style="text-decoration: underline;">{{product.titulo}}</a></h4>
+				<br>
+				<h5><strong>{{product.editorial}}</strong></h5>
+				<p style="text-align: left;">{{product.descripcion}}</p>
+			</div>
+		</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
