@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="BookStoreApp">
+<head>
+	<title>BookStoreApp</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #adad85">
+	<div class="container" ng-controller="BookStoreController as BookStoreApp">
+		<div class="row">
+			<h1 style="padding-bottom: 10px; color: gray;"><strong>Libros</strong></h1>
+		</div>
+		<div class="row well well-sm" style="background-color: #999966">
+			<form class="form-inline">
+				<label class="col-lg-2 col-md-2">Buscar</label>
+				<div class="form-group">
+					<label>Titulo:</label>
+					<input type="text" ng-model="searchText">
+				</div>
+				<div class="form-group">
+					<label>Ordenar</label>
+					<select class="form-control" ng-model="orden">
+						<option value="titulo">Titulo</option>
+						<option value="editorial">Editorial</option>
+						<option value="precio">Precio</option>
+					</select>
+				</div>
+			</form>
+		</div>
+		<div class="container well well-sm" style="background-color: #ccccb3">
+			<div class="row" style="padding-bottom: 50px;" ng-repeat="product in BookStoreApp.products | filter:searchText | orderBy:orden">
+				<img class="col-lg-2 col-md-2 col-sm-2" ng-src="{{product.img}}">
+				<h4><a href="" style="text-decoration: underline;">{{product.titulo}}</a></h4>
+				<section class="col-lg-10 col-md-10 col-sm-10" ng-init="panel.tab" ng-controller="BookPanelController as panel">
+					<ul class="nav nav-tabs">
+						<li ng-class="{ active: panel.isSelected(1)}"><a href="" ng-click="panel.selectTab(1)">Info</a></li>
+						<li ng-class="{ active: panel.isSelected(2)}"><a href="" ng-click="panel.selectTab(2)">Sinopsis</a></li>
+						<li ng-class="{ active: panel.isSelected(3)}"><a href="" ng-click="panel.selectTab(3)">Precio</a></li>
+					</ul>
+					<div class="panel" ng-show="panel.isSelected(1)" style="background-color: #b8b894">
+						<h5 style="text-align: left; padding: 5px;"><strong>Autor: </strong><p>{{product.autor}}</p></h5>
+						<h5 style="text-align: left; padding: 5px;"><strong>Editorial: </strong><p>{{product.editorial}}</p></h5>
+					</div>
+					<div class="panel" ng-show="panel.isSelected(2)" style="background-color: #b8b894">
+						<p style="text-align: left; padding: 10px;">{{product.descripcion}}</p>
+					</div>
+					<div class="panel" ng-show="panel.isSelected(3)" style="background-color: #b8b894">
+						<h2 style="text-align: left; padding: 10px;">{{product.precio | currency}}</h2>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
